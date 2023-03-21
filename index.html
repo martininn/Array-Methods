@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            background-color: rgb(45,45,45);
+        }
+        button {
+            cursor: pointer;
+        }
+        div {
+            color: white;
+        }
+        tt {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div>A visualization of array methods. <br>Original array: <tt>const cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];</tt></div>
+    <button onclick="btnToString()">toString()</button>
+    <button onclick="btnToJoin()">join()</button>
+    <button onclick="btnToPop()">pop()</button>
+    <button onclick="btnToPush()">push()</button>
+    <button onclick="btnToShift()">shift()</button>
+    <button onclick="btnToUnshift()">unshift()</button>
+    <button onclick="btnToSplice()">splice()</button>
+    <button onclick="btnToSlice()">slice()</button>
+    <div id="app"></div>
+    <br><hr>
+    <div>You can choose what element from an array to show. 
+        <tt>(cars[0], cars[1], cars[2]... indexing)</tt></div>
+    <button onclick="firstIndex()">cars[0]</button>
+    <button onclick="secondIndex()">cars[1]</button>
+    <button onclick="thirdIndex()">cars[2]</button>
+    <button onclick="fourthIndex()">cars[3]</button>
+    <div id="showArray"></div>
+    <br><hr>
+    <div>Using <tt>cars[i]</tt>, you can change that particular element very easily.</div>
+    <div><tt>cars[i] = "Honda"</tt></div>
+    <button onclick="firstIndexToHonda()">cars[0]</button>
+    <button onclick="secondIndexToHonda()">cars[1]</button>
+    <button onclick="thirdIndexToHonda()">cars[2]</button>
+    <button onclick="fourthIndexToHonda()">cars[3]</button>
+    <div id="hondaIndexShow"></div>
+    <br><hr>
+    <div>Believe it or not, you can actually add an element using <tt>.length</tt></div>
+    <div><tt>cars[cars.length] = "Audi";</tt></div>
+    <button onclick="activateLength()">Activate</button>
+    <div id="originalArray"></div>
+    <div id="reloadThePage"></div>
+    <br><hr>
+    <div>You can merge multiple arrays using the <tt>concat()</tt> method.</div>
+    <div>Let's say we have two arrays of cars:</div>
+    <div id="firstCarArray"></div>
+    <div id="secondCarArray"></div>
+    <div>Through the <tt>concat()</tt> method, we will say:</div>
+    <div><tt>const carChildren = cars1.concat(cars2);</tt></div>
+    <button onclick="concatDoingItsThing()">Show result</button>
+    <div id="concatResult"></div>
+    <br>
+    <div>And now; an example with multiple arrays:</div>
+    <div id="1stCarArray"></div>
+    <div id="2ndCarArray"></div>
+    <div id="thirdCarArray"></div>
+    <div id="fourthCarArray"></div>
+    <div id="fifthCarArray"></div>
+    <br>
+    <div><tt>const carChildren = cars1.concat(cars2, cars3, cars4, cars5);</tt></div>
+    <button onclick="concatDoingItsThing2()">Show result</button>
+    <div id="concatResult2"></div>
+    <br><hr>
+    <div>Using the <tt>splice()</tt> method, you can more accurately decide where to add new items to an array.</div>
+    <div>It looks like this:</div>
+    <div><tt>cars.splice(2, 0, "Nissan", "Mazda");</tt></div>
+    <div>The first parameter defines where it should be added (index 2), while the second parameter defines how many elements should be removed.</div>
+    <div>Click the button under to see what it does to our array.</div>
+    <button onclick="spliceInTheJaps()">Show result</button>
+    <div id="spliceResult"></div>
+    <br>
+    <div>In this theme, you can remove elements with the <tt>splice()</tt> method.</div>
+    <div><tt>cars.splice(0, 1);</tt></div>
+    <div>This will remove the first element (but you can specify!). Test it under here:</div>
+    <button onclick="spliceRemove()">Show result</button>
+    <div id="spliceResult2"></div>
+    <br><hr>
+    <div>Using the <tt>slice()</tt> method, you can "slice" out one element that gets put in a new array.</div>
+    <div>It doesn't remove any elements from the source array, and it looks like this:</div>
+    <div><tt>const slicedOutPart = cars.slice(1);</tt></div>
+    <div>This will "slice" out the first element, and create a new array from the leftovers, as you can see here:</div>
+    <button onclick="sliceItOut()">Show result</button>
+    <div id="sliceResult"></div>
+    <br>
+    <div>You can also use multiple arguments here too, something like this:</div>
+    <div><tt>cars.slice(1, 3);</tt></div>
+    <div>This one will cut out a part from index 1, up to (BUT NOT INCLUDING) index 3!</div>
+    <div>Here's what it looks like on our array:</div>
+    <button onclick="sliceWithParameters()">Show result</button>
+    <div id="sliceResult2"></div>
+    <br>
+    <div>Having no argument at the end will just slice out the rest of the array (<tt>cars.slice(2)</tt>):</div>
+    <button onclick="sliceWithNoEndArgument()">Show result</button>
+    <div id="sliceResult3"></div>
+    <br><hr>
+
+    <script>
+        const cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+        const carsUpdate = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+        const cars1 = ["Lancia", "Opel", "Renault"];
+        const cars2 = ["Mercedes", "Peugeot"];
+        const cars3 = ["Volkswagen", "Ford", "Izusu", "Suzuki"];
+        const cars4 = ["Ferrari", "Bugatti", "Aston Martin"];
+        const cars5 = ["Citroen"]
+        
+        function btnToString(){
+            document.getElementById('app').innerHTML = `<div>${cars.toString()}</div><tt>cars.toString()</tt></div>`;
+        }
+
+        function btnToJoin(){
+            document.getElementById('app').innerHTML = `<div>${cars.join(" * ")}</div><div><tt>cars.join(" * ")</tt></div>`;
+        }
+
+        function btnToPop(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            document.getElementById('app').innerHTML = `<div>${cars.pop()}</div><div><tt>cars.pop()</tt></div>`;
+        }
+
+        function btnToPush(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars.push("Saab");
+            document.getElementById('app').innerHTML = `<div>${cars}</div><div><tt>cars.push("Saab");</tt></div>`;
+        }
+
+        function btnToShift(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars.shift();
+            document.getElementById('app').innerHTML = `<div>${cars}</div><div><tt>cars.shift();</tt></div>`;
+        }
+
+        function btnToUnshift(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars.unshift("Toyota");
+            document.getElementById('app').innerHTML = `<div>${cars}</div><div><tt>cars.unshift("Toyota");</tt></div>`;
+        }
+
+        function btnToSplice(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars.splice(2, 0, "Nissan", "Mazda");
+            document.getElementById('app').innerHTML = `<div>${cars}</div><div><tt>cars.splice(2, 0, "Nissan", "Mazda");</tt></div>`;
+        }
+
+        function btnToSlice(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            let slicedOutPart = cars.slice(1, 3);
+            document.getElementById('app').innerHTML = `<div>${slicedOutPart}</div><div><tt>let slicedOutPart = cars.slice(1, 3); <- Volvo and Alfa Romeo is "slicedOutPart"</tt></div>`;
+        }
+
+
+        function firstIndex(){
+            document.getElementById('showArray').innerHTML = cars[0];        
+        }
+        function secondIndex(){
+            document.getElementById('showArray').innerHTML = cars[1];        
+        }
+        function thirdIndex(){
+            document.getElementById('showArray').innerHTML = cars[2];        
+        }
+        function fourthIndex(){
+            document.getElementById('showArray').innerHTML = cars[3];        
+        }
+
+
+        function firstIndexToHonda(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars[0] = "Honda";
+            document.getElementById('hondaIndexShow').innerHTML = cars;
+        }
+        function secondIndexToHonda(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars[1] = "Honda";
+            document.getElementById('hondaIndexShow').innerHTML = cars;
+        }
+        function thirdIndexToHonda(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars[2] = "Honda";
+            document.getElementById('hondaIndexShow').innerHTML = cars;
+        }
+        function fourthIndexToHonda(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars[3] = "Honda";
+            document.getElementById('hondaIndexShow').innerHTML = cars;
+        }
+
+        document.getElementById('originalArray').innerHTML = carsUpdate;
+        
+        function activateLength(){
+            carsUpdate[carsUpdate.length] = "Audi";
+            document.getElementById('originalArray').innerHTML = carsUpdate;
+            document.getElementById('reloadThePage').innerHTML = `(Reload the page to get the original array)`;
+        }
+
+        document.getElementById('firstCarArray').innerHTML = `<tt>cars1 = [${cars1}]<tt>`;
+        document.getElementById('secondCarArray').innerHTML = `<tt>cars2 = [${cars2}]<tt>`;
+
+        
+        function concatDoingItsThing(){
+            const carsChildren = cars1.concat(cars2);
+            document.getElementById('concatResult').innerHTML = carsChildren;
+        }
+
+        document.getElementById('1stCarArray').innerHTML = `<tt>cars1 = [${cars1}]<tt>`;
+        document.getElementById('2ndCarArray').innerHTML = `<tt>cars2 = [${cars2}]<tt>`;
+        document.getElementById('thirdCarArray').innerHTML = `<tt>cars3 = [${cars3}]<tt>`;
+        document.getElementById('fourthCarArray').innerHTML = `<tt>cars4 = [${cars4}]<tt>`;
+        document.getElementById('fifthCarArray').innerHTML = `<tt>cars5 = [${cars5}]<tt>`;
+
+        function concatDoingItsThing2(){
+            const carsChildren2 = cars1.concat(cars2, cars3, cars4, cars5);
+            document.getElementById('concatResult2').innerHTML = carsChildren2;
+        }
+
+        function spliceInTheJaps(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars.splice(2, 0, "Nissan", "Mazda");
+            document.getElementById('spliceResult').innerHTML = cars;
+        }
+
+        function spliceRemove(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            cars.splice(0, 1);
+            document.getElementById('spliceResult2').innerHTML = cars;
+        }
+
+        function sliceItOut(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            let slicedOutPart = cars.slice(1);
+            document.getElementById('sliceResult').innerHTML = `<div>cars = ${cars}</div><div>slicedOutPart = ${slicedOutPart}</div>`;
+        }
+
+        function sliceWithParameters(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            let slicedOutPart = cars.slice(1, 3);
+            document.getElementById('sliceResult2').innerHTML = `<div>cars = ${cars}</div><div>slicedOutPart = ${slicedOutPart}</div>`;
+        }
+
+        function sliceWithNoEndArgument(){
+            let cars = ["BMW", "Volvo", "Alfa Romeo", "Fiat"];
+            let slicedOutPart = cars.slice(2);
+            document.getElementById('sliceResult3').innerHTML = `<div>cars = ${cars}</div><div>slicedOutPart = ${slicedOutPart}</div>`;
+        }
+    </script>
+    
+</body>
+</html>
